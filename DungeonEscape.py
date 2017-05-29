@@ -8,13 +8,15 @@ from pygame.locals import *
 #This is essential for all pygame programs
 pygame.init()
 pygame.display.set_caption('Dungeon Escape')
-#The color t'UP'le values
+#The color tuple values
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 GRAY = (147, 147, 147)
 ORANGE = (255, 165, 0)
 YELLOW = (255, 255, 0)
 RED = (255,0,0)
+#It may seem strange that I am create values for 1 and 2, but when moving the player it halfs the code
+#If I could store + and - in a variable then it would be halfed again
 ONE = 0
 TWO = 0
 direction = 'NONE'
@@ -43,6 +45,7 @@ def createMapList():
     file = open('dungeonescapelevels.txt', 'r')
     mainList = []
     nextList = []
+    #I could not create a function to find the width of one map so Instead I inputted them manually
     widthList = [14, 9, 15, 12, 9, 9, 7,
                  11, 9, 16, 13, 15, 13, 19, 13, 9, 18,
                  11, 27, 12, 10, 9, 15, 23, 8, 25, 9,
