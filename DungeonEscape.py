@@ -19,7 +19,7 @@ ONE = 0
 TWO = 0
 direction = 'NONE'
 
-DISPLAYSURF = pygame.display.set_mode((1240, 720))
+DISPLAYSURF = pygame.display.set_mode((1240, 760))
 
 FPSCLOCK = pygame.time.Clock()
 
@@ -43,7 +43,13 @@ def createMapList():
     file = open('dungeonescapelevels.txt', 'r')
     mainList = []
     nextList = []
-    widthList = [14, 9, 15, 12, 9, 9, 7, 11, 9, 16, 13, 15, 13, 19, 13, 9, 18, 11, 27, 12, 10, 9, 15, 23, 8, 25, 9]
+    widthList = [14, 9, 15, 12, 9, 9, 7,
+                 11, 9, 16, 13, 15, 13, 19, 13, 9, 18,
+                 11, 27, 12, 10, 9, 15, 23, 8, 25, 9,
+                 15, 15, 17, 14, 18, 18, 24, 21, 22, 26,
+                 23, 24, 25, 26, 27, 27, 29, 26, 23, 24,
+                 24, 19, 30, 24, 23, 30, 22, 23, 25, 27
+]
 
     for i, line in enumerate(file):  # line is a string 
         # get rid of semicolons, new line characters, and blank spaces
@@ -112,6 +118,7 @@ def movePlayer():
     global playerPosition
     global mapNeedsRedraw
     global currentLevelIndex
+    global direction
     #I only edit playerPositionMap and keep currentLevel the same so the player
     #can reset the level by changing it to the original
     playerPositionMap = currentLevel
@@ -142,8 +149,6 @@ def movePlayer():
                     playerPosition = playerPositionMap.index('p')
                 elif 'G' in playerPositionMap:
                     playerPosition = playerPositionMap.index('G')
-                elif 'F' in playerPositionMap:
-                    playerPosition = playerPositionMap.index('F')
                 if ((event.key == K_r) and (currentLevelIndex == 4)):
                     currentLevelIndex = currentLevelIndex + 1
                     createMapList()
@@ -156,7 +161,7 @@ def movePlayer():
                     redrawMap()
                 elif ((event.key == K_n) and (currentLevelIndex > 6)):
                     currentLevelIndex = currentLevelIndex + 1
-                    if currentLevelIndex > 26:
+                    if currentLevelIndex > 56:
                         currentLevelIndex = 7
                     createMapList()
                     playerPositionMap = currentLevel
@@ -164,7 +169,7 @@ def movePlayer():
                 elif ((event.key == K_b) and (currentLevelIndex > 6)):
                     currentLevelIndex = currentLevelIndex - 1
                     if currentLevelIndex < 7:
-                        currentLevelIndex = 26
+                        currentLevelIndex = 56
                     createMapList()
                     playerPositionMap = currentLevel
                     redrawMap()
@@ -298,6 +303,11 @@ def movePlayer():
                     mapNeedsRedraw = True
                 #Redraws the map if the player pressed a key
                 if mapNeedsRedraw:
+                    direction = 'NONE'
+                    if 'p' in playerPositionMap:
+                        playerPosition = playerPositionMap.index('p')
+                    elif 'G' in playerPositionMap:
+                        playerPosition = playerPositionMap.index('G')
                     redrawMap()
         #This is the clock and display 'UP'date
         pygame.display.update()
